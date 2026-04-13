@@ -18,18 +18,34 @@ const fredoka = Fredoka({
 });
 
 export const metadata: Metadata = {
-  title: "Vasos Personalizados | Diseños Divertidos para Niños",
+  title: "Vasos Mágicos | Diseños Divertidos para Niños",
   description: "Vasos de plástico personalizados con diseños adorables para fiestas infantiles. Animales, héroes, princesas y más. ¡Ordena por WhatsApp!",
   keywords: ["vasos personalizados", "vasos para niños", "fiesta infantil", "vasos estampados", "vasos divertidos", "cumpleaños infantil"],
-  metadataBase: new URL("https://vasos-personalizados.vercel.app"),
+  metadataBase: new URL("https://vasosmagicos.vercel.app"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Vasos Personalizados | Diseños Divertidos para Niños",
+    title: "Vasos Mágicos | Diseños Divertidos para Niños",
     description: "Vasos de plástico personalizados con diseños adorables para fiestas infantiles.",
+    url: "https://vasosmagicos.vercel.app/",
+    siteName: "Vasos Mágicos",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Vasos Mágicos - Diseños Divertidos para Niños",
+      },
+    ],
     locale: "es_MX",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vasos Mágicos | Diseños Divertidos para Niños",
+    description: "Vasos de plástico personalizados con diseños adorables para fiestas infantiles.",
+    images: ["/og-image.png"],
   },
 };
 
@@ -47,11 +63,11 @@ export default function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Store",
-    "name": "Vasos Personalizados",
+    "name": "Vasos Mágicos",
     "description": "Tienda de vasos de plástico personalizados con diseños infantiles",
     "priceRange": "$$",
     "telephone": "+523313262108",
-    "url": "https://vasos-personalizados.vercel.app/"
+    "url": "https://vasosmagicos.vercel.app/"
   };
 
   return (
