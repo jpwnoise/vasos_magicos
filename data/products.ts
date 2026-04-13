@@ -5,6 +5,7 @@ export interface Product {
   price: number;
   category: string;
   icon: string;
+  image?: string;
   colors: string[];
   minQty: number;
 }
@@ -29,18 +30,31 @@ export const categories: Category[] = [
 
 export const products: Product[] = [
   {
+    id: 0,
+    name: 'Vaso Pony Mágico',
+    description: 'Adorable pony rosado con crina arcoíris y brillitos mágicos',
+    price: 52,
+    category: 'vasos-princesas',
+    icon: 'Pony',
+    image: '/pony.png',
+    colors: ['#fce7f3', '#f3e8ff', '#fef3c7'],
+    minQty: 10,
+  },
+  {
     id: 1,
-    name: 'Vaso Osito Feliz',
-    description: 'Adorable osito con lazo rosa, perfecto para fiestas infantiles',
+    name: 'Vaso Dino Feliz',
+    description: 'Adorable Dinosaurio, perfecto para fiestas infantiles',
     price: 45,
     category: 'vasos-animales',
     icon: 'Bear',
+    image: '/dino.png',
     colors: ['#fce7f3', '#dbeafe', '#fef3c7'],
     minQty: 10,
   },
   {
     id: 2,
-    name: 'Vaso Gatito Dormido',
+    name: 'Vaso Oso Dormido',
+    image: '/oso.png',
     description: 'Tierno gatito durmiendo con estrellas brillantes',
     price: 45,
     category: 'vasos-animales',

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef } from "react";
 import { TiltButton } from "react-tilt-button";
 import { categories } from "@/data/products";
 
@@ -63,36 +64,185 @@ function getCategoryIcon(iconName: string, color: string, isActive: boolean) {
   }
 }
 
-export default function CategoryFilter({ activeCategory, onCategoryChange }: CategoryFilterProps) {
+function CategoryButton({ cat, isActive, darkerSideColor, onClick, onShowParticles }: {
+  cat: typeof categories[0];
+  isActive: boolean;
+  darkerSideColor: string;
+  onClick: () => void;
+  onShowParticles: () => void;
+}) {
+  const buttonRef = useRef<HTMLDivElement>(null);
+  const [showPuff, setShowPuff] = useState(false);
+  const [puffKey, setPuffKey] = useState(0);
+  const isAnimating = useRef(false);
+
+  const handleClick = () => {
+    // Prevent triggering animation while one is already running
+    if (isAnimating.current) return;
+    
+    isAnimating.current = true;
+    onClick();
+    
+    // Trigger puff animation
+    setShowPuff(true);
+    setPuffKey(prev => prev + 1);
+    onShowParticles();
+    
+    // Reset after animation
+    setTimeout(() => {
+      setShowPuff(false);
+      isAnimating.current = false;
+    }, 1400);
+  };
+
+  const puffColor = isActive ? cat.color : darkenColor(cat.color, 20);
+
   return (
-    <div className="category-scroll flex gap-3 mb-10 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-4 scroll-smooth snap-x snap-mandatory">
+    <div
+      ref={buttonRef}
+      className="snap-start shrink-0 category-tilt-button relative"
+      style={{ perspective: "800px" }}
+    >
+      {/* Puff cloud animation */}
+      {showPuff && (
+        <div
+          className="pointer-events-none z-50"
+          style={{
+            position: "absolute",
+            left: "-60px",
+            right: "-60px",
+            top: "-60px",
+            bottom: "-60px",
+          }}
+        >
+          {Array.from({ length: 4 }, (_, i) => {
+            const baseAngle = (i / 4) * 360 + 45;
+            const randomAngleOffset = (Math.random() - 0.5) * 40;
+            const angle = baseAngle + randomAngleOffset;
+            const radius = 40 + Math.random() * 15;
+            const startX = Math.cos((angle * Math.PI) / 180) * radius;
+            const startY = Math.sin((angle * Math.PI) / 180) * radius;
+            const size = 14 + Math.random() * 10;
+            const puffDistance = 25 + Math.random() * 25;
+            const puffAngle = angle + (Math.random() - 0.5) * 50;
+            const puffX = Math.cos((puffAngle * Math.PI) / 180) * puffDistance;
+            const puffY = Math.sin((puffAngle * Math.PI) / 180) * puffDistance;
+            const delay = 0.03 + Math.random() * 0.1;
+            const duration = 0.7 + Math.random() * 0.4;
+            const rotation = (Math.random() - 0.5) * 60;
+
+            return (
+              <div
+                key={`${puffKey}-${i}`}
+                className="puff-container"
+                style={{
+                  position: "absolute",
+                  left: `calc(50% + ${startX}px)`,
+                  top: `calc(50% + ${startY}px)`,
+                }}
+              >
+                <div
+                  className="puff-cloud"
+                  style={{
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    ["--puff-x" as string]: `${puffX}px`,
+                    ["--puff-y" as string]: `${puffY}px`,
+                    ["--puff-rotate" as string]: `${rotation}deg`,
+                    ["--puff-color" as string]: puffColor,
+                    animation: `puffCloud ${duration}s ease-out ${delay}s both`,
+                  }}
+                >
+                  <svg viewBox="0 0 24 24" fill="white" style={{ filter: `drop-shadow(0 2px 6px var(--puff-color))` }}>
+                    <path d="M18.5 12A5.5 5.5 0 0 0 13 7.5c-.44 0-.86.07-1.26.18C11.36 5.26 9.02 3.5 6.5 4 3.48 4.6 1.5 7.5 2 10.5c.1.52.28 1 .54 1.46A4.5 4.5 0 0 0 6.5 20h12a4.5 4.5 0 0 0 0-8z"/>
+                  </svg>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Sombra estática */}
+      <div
+        className="category-shadow"
+        style={{
+          backgroundColor: isActive ? darkenColor(cat.color, 50) : darkenColor(cat.color, 60),
+          opacity: 0.25,
+          filter: "blur(8px)",
+          borderRadius: "20px",
+          width: "160px",
+          height: "60px",
+          position: "absolute",
+          bottom: "-6px",
+          left: "0",
+          zIndex: 0,
+          transition: "all 0.3s ease",
+        }}
+      />
+
+      <div
+        className="relative z-10 category-button-wrapper"
+        style={{
+          transition: "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "translateY(-6px)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "translateY(0)";
+        }}
+      >
+        <TiltButton
+          onClick={handleClick}
+          variant="solid"
+          width={160}
+          height={60}
+          elevation={10}
+          tilt={2}
+          radius={20}
+          motion={120}
+          surfaceColor={isActive ? cat.color : "#ffffff"}
+          sideColor={isActive ? darkenColor(cat.color, 30) : darkerSideColor}
+          textColor={isActive ? "#ffffff" : cat.color}
+          borderColor={isActive ? "transparent" : cat.color}
+          borderWidth={isActive ? 0 : 2}
+          className="focus:outline-none"
+        >
+          <div className="flex items-center gap-2 font-nunito font-bold text-sm whitespace-nowrap">
+            {getCategoryIcon(cat.icon, cat.color, isActive)}
+            <span>{cat.name}</span>
+          </div>
+        </TiltButton>
+      </div>
+    </div>
+  );
+}
+
+export default function CategoryFilter({ activeCategory, onCategoryChange }: CategoryFilterProps) {
+  const [triggerPuff, setTriggerPuff] = useState(false);
+
+  const handleCategoryClick = (catId: string) => {
+    setTriggerPuff(true);
+    setTimeout(() => setTriggerPuff(false), 100);
+    onCategoryChange(catId);
+  };
+
+  return (
+    <div className="category-scroll flex gap-3 mb-14 overflow-x-auto py-6 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-6 scroll-smooth snap-x snap-mandatory">
       {categories.map((cat) => {
         const isActive = activeCategory === cat.id;
         const darkerSideColor = darkenColor(cat.color, 40);
 
         return (
-          <TiltButton
+          <CategoryButton
             key={cat.id}
-            onClick={() => onCategoryChange(cat.id)}
-            variant="solid"
-            width={160}
-            height={60}
-            elevation={8}
-            tilt={1.5}
-            radius={20}
-            motion={120}
-            surfaceColor={isActive ? cat.color : "#ffffff"}
-            sideColor={isActive ? darkenColor(cat.color, 30) : darkerSideColor}
-            textColor={isActive ? "#ffffff" : cat.color}
-            borderColor={isActive ? "transparent" : cat.color}
-            borderWidth={isActive ? 0 : 2}
-            className="snap-start shrink-0 focus:outline-none focus:ring-2 focus:ring-accent-purple focus:ring-offset-2"
-          >
-            <div className="flex items-center gap-2 font-nunito font-bold text-sm whitespace-nowrap">
-              {getCategoryIcon(cat.icon, cat.color, isActive)}
-              <span>{cat.name}</span>
-            </div>
-          </TiltButton>
+            cat={cat}
+            isActive={isActive}
+            darkerSideColor={darkerSideColor}
+            onClick={() => handleCategoryClick(cat.id)}
+            onShowParticles={() => {}}
+          />
         );
       })}
     </div>

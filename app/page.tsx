@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Header from "@/components/Header";
 import CategoryFilter from "@/components/CategoryFilter";
 import ProductCard from "@/components/ProductCard";
@@ -41,28 +42,47 @@ export default function Home() {
             </svg>
           </div>
 
-          <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 font-fredoka animate-slide-up opacity-0">
-              <span className="gradient-text">Vasos Mágicos</span> ✨
-            </h1>
-            <p className="text-xl md:text-2xl text-text-light mb-8 animate-slide-up opacity-0 delay-1">
-              Diseños personalizados para fiestas infantiles
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up opacity-0 delay-2">
-              <a
-                href="#productos"
-                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-accent-pink to-accent-purple text-white px-8 py-4 rounded-full text-lg font-bold hover:shadow-xl hover:scale-105 transition-all duration-300"
-              >
-                Ver Diseños 🎨
-              </a>
-              <a
-                href="https://wa.me/523313262108?text=Hola!%20Me%20interesan%20los%20vasos%20personalizados"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-white text-accent-purple border-2 border-accent-purple px-8 py-4 rounded-full text-lg font-bold hover:bg-pastel-purple transition-all duration-300"
-              >
-                Ordenar Ahora 🎉
-              </a>
+          <div className="max-w-6xl mx-auto px-4 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              {/* Text Content */}
+              <div className="text-center md:text-left">
+                <h1 className="text-4xl md:text-6xl font-bold mb-4 font-fredoka animate-slide-up opacity-0">
+                  <span className="gradient-text">Vasos Mágicos</span> ✨
+                </h1>
+                <p className="text-xl md:text-2xl text-text-light mb-8 animate-slide-up opacity-0 delay-1">
+                  Diseños personalizados para fiestas infantiles
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-slide-up opacity-0 delay-2">
+                  <a
+                    href="#productos"
+                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-accent-pink to-accent-purple text-white px-8 py-4 rounded-full text-lg font-bold hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  >
+                    Ver Diseños 🎨
+                  </a>
+                  <a
+                    href="https://wa.me/523313262108?text=Hola!%20Me%20interesan%20los%20vasos%20personalizados"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 bg-white text-accent-purple border-2 border-accent-purple px-8 py-4 rounded-full text-lg font-bold hover:bg-pastel-purple transition-all duration-300"
+                  >
+                    Ordenar Ahora 🎉
+                  </a>
+                </div>
+              </div>
+
+              {/* Hero Image */}
+              <div className="flex justify-center animate-slide-up opacity-0 delay-3">
+                <div className="relative w-full max-w-md animate-float">
+                  <Image
+                    src="/hero.png"
+                    alt="Vasos personalizados coloridos para fiestas infantiles"
+                    width={500}
+                    height={500}
+                    className="w-full h-auto drop-shadow-2xl"
+                    priority
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>

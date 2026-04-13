@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import Image from "next/image";
 import { FaWhatsapp } from "react-icons/fa";
 import { Product } from "@/data/products";
 
@@ -11,7 +12,7 @@ interface ProductCardProps {
 
 function getProductIcon(iconName: string, color: string) {
   const iconSize = 48;
-  
+
   switch (iconName) {
     case "Bear":
       return (
@@ -120,6 +121,8 @@ function getProductIcon(iconName: string, color: string) {
           <polygon points="24,38 28,46 22,50 16,44 20,36" fill="white"/><polygon points="38,44 42,50 36,54 30,50 32,44" fill="white"/>
         </svg>
       );
+    case "Pony":
+      return null;
     default:
       return (
         <svg width={iconSize} height={iconSize} viewBox="0 0 64 64" fill={color}>
@@ -130,22 +133,52 @@ function getProductIcon(iconName: string, color: string) {
 }
 
 export default function ProductCard({ product, index }: ProductCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = useState("perspective(1000px) rotateX(0deg) rotateY(0deg)");
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -8;
+    const rotateY = ((x - centerX) / centerX) * 8;
+
+    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`);
+  };
+
+  const handleMouseLeave = () => {
+    setTransform("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
+    setIsHovered(false);
+  };
+
   const phoneNumber = "523313262108";
   const message = encodeURIComponent(`Hola! Me interesa el producto: ${product.name}`);
 
+  const hasImage = !!product.image;
+
   return (
     <div
-      className="group bg-white rounded-3xl shadow-md overflow-hidden card-hover animate-slide-up opacity-0"
-      style={{ animationDelay: `${index * 0.1}s` }}
+      ref={cardRef}
+      className="group bg-white rounded-3xl shadow-md overflow-hidden animate-slide-up opacity-0"
+      style={{
+        animationDelay: `${index * 0.1}s`,
+        transform,
+        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        transformStyle: "preserve-3d",
+      }}
+      onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Product Image Area */}
       <div 
-        className="relative h-48 sm:h-56 flex items-center justify-center transition-all duration-300"
+        className="relative h-48 sm:h-56 flex items-center justify-center overflow-hidden"
         style={{ 
-          background: `linear-gradient(135deg, ${product.colors[0]}, ${product.colors[1]})` 
+          background: `linear-gradient(135deg, ${product.colors[0]}, ${product.colors[1]})`,
         }}
       >
         {/* Decorative elements */}
@@ -162,9 +195,30 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           </div>
         </div>
 
-        {/* Product Icon */}
-        <div className={`transition-transform duration-300 ${isHovered ? "scale-110" : ""}`}>
-          {getProductIcon(product.icon, product.colors[2] ? "#ffffff" : product.colors[0])}
+        {/* Product Icon or Image with 3D pop-out */}
+        <div 
+          className="relative z-10 transition-transform duration-300"
+          style={{
+            transform: isHovered ? "translateZ(60px) scale(1.1)" : "translateZ(30px)",
+            transition: "transform 0.3s ease",
+          }}
+        >
+          {hasImage ? (
+            <Image
+              src={product.image!}
+              alt={product.name}
+              width={200}
+              height={200}
+              className="w-40 h-40 sm:w-48 sm:h-48 object-contain drop-shadow-2xl"
+              style={{
+                filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.2))",
+              }}
+            />
+          ) : (
+            <div style={{ transform: isHovered ? "translateZ(40px)" : "translateZ(0)" }}>
+              {getProductIcon(product.icon, product.colors[2] ? "#ffffff" : product.colors[0])}
+            </div>
+          )}
         </div>
 
         {/* Badge */}
