@@ -19,13 +19,13 @@ export interface Category {
 }
 
 export const categories: Category[] = [
-  { id: 'todos', name: 'Todos', icon: 'Star', color: '#8b5cf6', bgColor: '#f3e8ff' },
-  { id: 'vasos-animales', name: 'Animales', icon: 'Heart', color: '#ec4899', bgColor: '#fce7f3' },
-  { id: 'vasos-heroes', name: 'Héroes', icon: 'Star', color: '#3b82f6', bgColor: '#dbeafe' },
-  { id: 'vasos-princesas', name: 'Princesas', icon: 'Crown', color: '#a855f7', bgColor: '#f3e8ff' },
-  { id: 'vasos-espacio', name: 'Espacio', icon: 'Moon', color: '#6366f1', bgColor: '#e0e7ff' },
-  { id: 'vasos-naturaleza', name: 'Naturaleza', icon: 'Flower', color: '#22c55e', bgColor: '#dcfce7' },
-  { id: 'vasos-deportes', name: 'Deportes', icon: 'Trophy', color: '#f97316', bgColor: '#ffedd5' },
+  { id: 'todos', name: 'Todos', icon: 'Star', color: '#b48eff', bgColor: '#f3e8ff' },
+  { id: 'vasos-animales', name: 'Animales', icon: 'Heart', color: '#f472b6', bgColor: '#fce7f3' },
+  { id: 'vasos-heroes', name: 'Héroes', icon: 'Star', color: '#60a5fa', bgColor: '#dbeafe' },
+  { id: 'vasos-princesas', name: 'Princesas', icon: 'Crown', color: '#c084fc', bgColor: '#f3e8ff' },
+  { id: 'vasos-espacio', name: 'Espacio', icon: 'Moon', color: '#818cf8', bgColor: '#e0e7ff' },
+  { id: 'vasos-naturaleza', name: 'Naturaleza', icon: 'Flower', color: '#4ade80', bgColor: '#dcfce7' },
+  { id: 'vasos-deportes', name: 'Deportes', icon: 'Trophy', color: '#fb923c', bgColor: '#ffedd5' },
 ];
 
 export const products: Product[] = [

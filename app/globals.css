@@ -120,6 +120,93 @@ body {
   transform: translate(-50%, -50%);
 }
 
+/* Dancing animations for vasos slider */
+@keyframes dancePony {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  25% { transform: translateY(-15px) rotate(-8deg) scale(1.05); }
+  50% { transform: translateY(-5px) rotate(5deg) scale(0.95); }
+  75% { transform: translateY(-20px) rotate(-3deg) scale(1.02); }
+}
+
+@keyframes danceBear {
+  0%, 100% { transform: translateY(0) rotate(0deg) skewX(0deg); }
+  20% { transform: translateY(-10px) rotate(5deg) skewX(-3deg); }
+  40% { transform: translateY(-18px) rotate(-6deg) skewX(2deg); }
+  60% { transform: translateY(-8px) rotate(4deg) skewX(-2deg); }
+  80% { transform: translateY(-12px) rotate(-2deg) skewX(1deg); }
+}
+
+@keyframes danceDino {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+  15% { transform: translateY(-12px) translateX(-5px) rotate(-5deg); }
+  30% { transform: translateY(-22px) translateX(3px) rotate(7deg); }
+  45% { transform: translateY(-8px) translateX(-8px) rotate(-3deg); }
+  60% { transform: translateY(-16px) translateX(5px) rotate(4deg); }
+  75% { transform: translateY(-10px) translateX(-3px) rotate(-6deg); }
+}
+
+@keyframes dancePony2 {
+  0%, 100% { transform: translateY(0) scale(1); }
+  33% { transform: translateY(-25px) scale(1.08) rotate(10deg); }
+  66% { transform: translateY(-10px) scale(0.95) rotate(-8deg); }
+}
+
+@keyframes danceDino2 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  10% { transform: translateY(-14px) rotate(12deg); }
+  30% { transform: translateY(-6px) rotate(-10deg); }
+  50% { transform: translateY(-18px) rotate(8deg); }
+  70% { transform: translateY(-4px) rotate(-6deg); }
+  90% { transform: translateY(-12px) rotate(4deg); }
+}
+
+@keyframes danceBear2 {
+  0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
+  12.5% { transform: translateX(-8px) translateY(-12px) rotate(-7deg); }
+  25% { transform: translateX(8px) translateY(-18px) rotate(5deg); }
+  37.5% { transform: translateX(-6px) translateY(-8px) rotate(-4deg); }
+  50% { transform: translateX(10px) translateY(-15px) rotate(8deg); }
+  62.5% { transform: translateX(-4px) translateY(-10px) rotate(-5deg); }
+  75% { transform: translateX(6px) translateY(-20px) rotate(6deg); }
+  87.5% { transform: translateX(-8px) translateY(-6px) rotate(-3deg); }
+}
+
+/* Assign animations to classes */
+.dance-pony { animation-name: dancePony; }
+.dance-bear { animation-name: danceBear; }
+.dance-dino { animation-name: danceDino; }
+.dance-pony-2 { animation-name: dancePony2; }
+.dance-dino-2 { animation-name: danceDino2; }
+.dance-bear-2 { animation-name: danceBear2; }
+
+/* Infinite scroll animation */
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left {
+  animation: scrollLeft 25s linear infinite;
+}
+
+.animate-scroll-left:hover {
+  animation-play-state: paused;
+}
+
+.dance-pony,
+.dance-bear,
+.dance-dino,
+.dance-pony-2,
+.dance-dino-2,
+.dance-bear-2 {
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }

@@ -4,9 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 import Header from "@/components/Header";
 import CategoryFilter from "@/components/CategoryFilter";
-import ProductCard from "@/components/ProductCard";
+import ProductSlider from "@/components/ProductSlider";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
+import DancingVasosSlider from "@/components/DancingVasosSlider";
 import { products, categories } from "@/data/products";
 
 export default function Home() {
@@ -120,28 +121,15 @@ export default function Home() {
             </h3>
           </div>
 
-          {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {filteredProducts.map((product, index) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                index={index}
-              />
-            ))}
-          </div>
-
-          {/* No results message */}
-          {filteredProducts.length === 0 && (
-            <div className="text-center py-16">
-              <p className="text-6xl mb-4">🔍</p>
-              <p className="text-xl text-text-light">No hay productos en esta categoría</p>
-            </div>
-          )}
+          {/* Products Slider */}
+          <ProductSlider key={activeCategory} products={filteredProducts} />
         </section>
 
         {/* How It Works Section */}
         <HowItWorks />
+
+        {/* Dancing Vasos Slider */}
+        <DancingVasosSlider />
 
         {/* Footer */}
         <Footer />

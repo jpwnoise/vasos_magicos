@@ -18,6 +18,17 @@ function darkenColor(hex: string, amount: number): string {
   return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
 }
 
+// Función para mezclar un color con blanco (hacer pastel muy claro)
+function lightenToWhite(hex: string, factor: number): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  const newR = Math.round(r + (255 - r) * factor);
+  const newG = Math.round(g + (255 - g) * factor);
+  const newB = Math.round(b + (255 - b) * factor);
+  return `#${newR.toString(16).padStart(2, "0")}${newG.toString(16).padStart(2, "0")}${newB.toString(16).padStart(2, "0")}`;
+}
+
 function getCategoryIcon(iconName: string, color: string, isActive: boolean) {
   const iconSize = 18;
   const iconColor = isActive ? "#ffffff" : color;
@@ -64,12 +75,10 @@ function getCategoryIcon(iconName: string, color: string, isActive: boolean) {
   }
 }
 
-function CategoryButton({ cat, isActive, darkerSideColor, onClick, onShowParticles }: {
+function CategoryButton({ cat, isActive, onClick }: {
   cat: typeof categories[0];
   isActive: boolean;
-  darkerSideColor: string;
   onClick: () => void;
-  onShowParticles: () => void;
 }) {
   const buttonRef = useRef<HTMLDivElement>(null);
   const [showPuff, setShowPuff] = useState(false);
@@ -77,18 +86,14 @@ function CategoryButton({ cat, isActive, darkerSideColor, onClick, onShowParticl
   const isAnimating = useRef(false);
 
   const handleClick = () => {
-    // Prevent triggering animation while one is already running
     if (isAnimating.current) return;
     
     isAnimating.current = true;
     onClick();
     
-    // Trigger puff animation
     setShowPuff(true);
     setPuffKey(prev => prev + 1);
-    onShowParticles();
     
-    // Reset after animation
     setTimeout(() => {
       setShowPuff(false);
       isAnimating.current = false;
@@ -202,8 +207,8 @@ function CategoryButton({ cat, isActive, darkerSideColor, onClick, onShowParticl
           tilt={2}
           radius={20}
           motion={120}
-          surfaceColor={isActive ? cat.color : "#ffffff"}
-          sideColor={isActive ? darkenColor(cat.color, 30) : darkerSideColor}
+          surfaceColor={isActive ? cat.color : lightenToWhite(cat.color, 0.92)}
+          sideColor={isActive ? darkenColor(cat.color, 30) : darkenColor(cat.color, 50)}
           textColor={isActive ? "#ffffff" : cat.color}
           borderColor={isActive ? "transparent" : cat.color}
           borderWidth={isActive ? 0 : 2}
@@ -220,11 +225,7 @@ function CategoryButton({ cat, isActive, darkerSideColor, onClick, onShowParticl
 }
 
 export default function CategoryFilter({ activeCategory, onCategoryChange }: CategoryFilterProps) {
-  const [triggerPuff, setTriggerPuff] = useState(false);
-
   const handleCategoryClick = (catId: string) => {
-    setTriggerPuff(true);
-    setTimeout(() => setTriggerPuff(false), 100);
     onCategoryChange(catId);
   };
 
@@ -232,16 +233,13 @@ export default function CategoryFilter({ activeCategory, onCategoryChange }: Cat
     <div className="category-scroll flex gap-3 mb-14 overflow-x-auto py-6 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-6 scroll-smooth snap-x snap-mandatory">
       {categories.map((cat) => {
         const isActive = activeCategory === cat.id;
-        const darkerSideColor = darkenColor(cat.color, 40);
 
         return (
           <CategoryButton
             key={cat.id}
             cat={cat}
             isActive={isActive}
-            darkerSideColor={darkerSideColor}
             onClick={() => handleCategoryClick(cat.id)}
-            onShowParticles={() => {}}
           />
         );
       })}
