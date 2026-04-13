@@ -40,21 +40,35 @@ export default function Cart() {
 
       {/* Cart Drawer */}
       <div className="fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 flex flex-col animate-slide-in-right">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <div className="flex items-center gap-2">
-            <FaWhatsapp className="text-2xl text-accent-green" />
-            <h2 className="text-xl font-bold text-text-dark font-fredoka">
-              Mi Pedido ({totalItems})
-            </h2>
+        {/* Header with Cashier Illustration */}
+        <div className="relative bg-gradient-to-b from-pastel-purple/30 to-transparent">
+          <div className="flex items-center justify-between p-4">
+            <div className="flex items-center gap-2">
+              <FaWhatsapp className="text-2xl text-accent-green" />
+              <h2 className="text-xl font-bold text-text-dark font-fredoka">
+                Mi Pedido ({totalItems})
+              </h2>
+            </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-2 text-text-light hover:text-text-dark transition-colors"
+              aria-label="Cerrar carrito"
+            >
+              <FaTimes className="text-xl" />
+            </button>
           </div>
-          <button
-            onClick={() => setIsOpen(false)}
-            className="p-2 text-text-light hover:text-text-dark transition-colors"
-            aria-label="Cerrar carrito"
-          >
-            <FaTimes className="text-xl" />
-          </button>
+
+          {/* Cashier Illustration */}
+          <div className="flex justify-center -mb-4">
+            <Image
+              src="/cashier.png"
+              alt="Cajero del carrito"
+              width={120}
+              height={120}
+              className="w-28 h-28 sm:w-32 sm:h-32 object-contain drop-shadow-lg"
+              priority
+            />
+          </div>
         </div>
 
         {/* Cart Items */}
