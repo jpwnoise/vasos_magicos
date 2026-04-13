@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { FaStar, FaHeart, FaCrown, FaMoon, FaSeedling, FaTrophy, FaPalette } from "react-icons/fa";
+import { GiPartyPopper } from "react-icons/gi";
+import { MdAutoAwesome } from "react-icons/md";
 import Header from "@/components/Header";
 import CategoryFilter from "@/components/CategoryFilter";
 import ProductSlider from "@/components/ProductSlider";
@@ -48,7 +51,8 @@ export default function Home() {
               {/* Text Content */}
               <div className="text-center md:text-left">
                 <h1 className="text-4xl md:text-6xl font-bold mb-4 font-fredoka animate-slide-up opacity-0">
-                  <span className="gradient-text">Vasos Mágicos</span> ✨
+                  <span className="gradient-text">Vasos Mágicos</span>{" "}
+                  <MdAutoAwesome className="inline-block text-3xl md:text-5xl" />
                 </h1>
                 <p className="text-xl md:text-2xl text-text-light mb-8 animate-slide-up opacity-0 delay-1">
                   Diseños personalizados para fiestas infantiles
@@ -58,7 +62,7 @@ export default function Home() {
                     href="#productos"
                     className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-accent-pink to-accent-purple text-white px-8 py-4 rounded-full text-lg font-bold hover:shadow-xl hover:scale-105 transition-all duration-300"
                   >
-                    Ver Diseños 🎨
+                    Ver Diseños <FaPalette />
                   </a>
                   <a
                     href="https://wa.me/523313262108?text=Hola!%20Me%20interesan%20los%20vasos%20personalizados"
@@ -66,7 +70,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 bg-white text-accent-purple border-2 border-accent-purple px-8 py-4 rounded-full text-lg font-bold hover:bg-pastel-purple transition-all duration-300"
                   >
-                    Ordenar Ahora 🎉
+                    Ordenar Ahora <GiPartyPopper />
                   </a>
                 </div>
               </div>
@@ -93,7 +97,7 @@ export default function Home() {
           {/* Section Title */}
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-3 font-fredoka">
-              Nuestros Diseños 🎨
+              Nuestros Diseños <FaPalette className="inline-block" />
             </h2>
             <p className="text-text-light text-lg">
               Elige la categoría que más te guste y encuentra el diseño perfecto para tu fiesta
@@ -109,12 +113,12 @@ export default function Home() {
           {/* Category Title */}
           <div className="flex items-center gap-3 mb-8">
             <span className="text-2xl" style={{ color: currentCategory?.color }}>
-              {currentCategory?.icon === "Star" && "⭐"}
-              {currentCategory?.icon === "Heart" && "💖"}
-              {currentCategory?.icon === "Crown" && "👑"}
-              {currentCategory?.icon === "Moon" && "🌙"}
-              {currentCategory?.icon === "Flower" && "🌸"}
-              {currentCategory?.icon === "Trophy" && "🏆"}
+              {currentCategory?.icon === "Star" && <FaStar />}
+              {currentCategory?.icon === "Heart" && <FaHeart />}
+              {currentCategory?.icon === "Crown" && <FaCrown />}
+              {currentCategory?.icon === "Moon" && <FaMoon />}
+              {currentCategory?.icon === "Flower" && <FaSeedling />}
+              {currentCategory?.icon === "Trophy" && <FaTrophy />}
             </span>
             <h3 className="text-2xl md:text-3xl font-bold font-fredoka" style={{ color: currentCategory?.color }}>
               {currentCategory?.name || "Todos los Diseños"}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaSearch } from "react-icons/fa";
 import ProductCard from "./ProductCard";
 import { Product } from "@/data/products";
 
@@ -29,7 +29,7 @@ export default function ProductSlider({ products }: ProductSliderProps) {
   if (products.length === 0) {
     return (
       <div className="text-center py-16">
-        <p className="text-6xl mb-4">🔍</p>
+        <FaSearch className="text-6xl text-text-light mb-4 mx-auto" />
         <p className="text-xl text-text-light">No hay productos en esta categoría</p>
       </div>
     );

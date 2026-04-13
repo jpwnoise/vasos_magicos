@@ -163,7 +163,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
   return (
     <div
       ref={cardRef}
-      className="group bg-white rounded-3xl shadow-md overflow-hidden animate-slide-up opacity-0"
+      className="group bg-white rounded-3xl shadow-md animate-slide-up opacity-0"
       style={{
         animationDelay: `${index * 0.1}s`,
         transform,
@@ -176,13 +176,13 @@ export default function ProductCard({ product, index }: ProductCardProps) {
     >
       {/* Product Image Area */}
       <div 
-        className="relative h-48 sm:h-56 flex items-center justify-center overflow-hidden"
+        className="relative h-48 sm:h-56 flex items-center justify-center"
         style={{ 
           background: `linear-gradient(135deg, ${product.colors[0]}, ${product.colors[1]})`,
         }}
       >
         {/* Decorative elements */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0">
           <div className="absolute top-2 right-2 animate-sparkle">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="#eab308">
               <path d="M10 0l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z"/>
@@ -209,7 +209,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
               alt={product.name}
               width={200}
               height={200}
-              className="w-40 h-40 sm:w-48 sm:h-48 object-contain drop-shadow-2xl"
+              className="w-40 h-40 sm:w-48 sm:h-48 object-contain drop-shadow-2xl -translate-y-10  scale-165"
               style={{
                 filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.2))",
               }}

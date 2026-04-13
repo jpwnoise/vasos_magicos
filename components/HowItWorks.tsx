@@ -1,4 +1,5 @@
 import { FaWhatsapp, FaPalette, FaShoppingBag, FaRocket } from "react-icons/fa";
+import { GiPartyPopper } from "react-icons/gi";
 
 const steps = [
   {
@@ -31,7 +32,7 @@ export default function HowItWorks() {
         {/* Section Title */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-3 font-fredoka">
-            ¿Cómo Funciona? 🎉
+            ¿Cómo Funciona? <GiPartyPopper className="inline-block text-2xl" />
           </h2>
           <p className="text-text-light text-lg max-w-2xl mx-auto">
             Ordenar tus vasos personalizados es muy fácil. ¡Solo sigue estos pasos!
@@ -76,7 +77,7 @@ export default function HowItWorks() {
         {/* CTA */}
         <div className="text-center mt-12">
           <a
-            href="https://wa.me/523313262108?text=Hola!%20Me%20interesan%20los%20vasos%20personalizados%20✨"
+            href="https://wa.me/523313262108?text=Hola!%20Me%20interesan%20los%20vasos%20personalizados"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-gradient-to-r from-accent-green to-emerald-500 text-white px-8 py-4 rounded-full text-lg font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 animate-bounce-soft"

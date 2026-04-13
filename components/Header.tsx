@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FaBars, FaTimes, FaWhatsapp } from "react-icons/fa";
 import { GiPartyPopper } from "react-icons/gi";
+import { MdAutoAwesome } from "react-icons/md";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,7 +23,7 @@ export default function Header() {
                 Vasos Mágicos
               </h1>
               <p className="text-xs text-text-light hidden sm:block">
-                Diseños personalizados para niños ✨
+                Diseños personalizados para niños <MdAutoAwesome className="inline-block" />
               </p>
             </div>
           </a>

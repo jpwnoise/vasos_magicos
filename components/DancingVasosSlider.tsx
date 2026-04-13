@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { FaMusic } from "react-icons/fa";
 
 interface DancingVaso {
   src: string;
@@ -40,7 +41,7 @@ export default function DancingVasosSlider() {
       <div className="max-w-6xl mx-auto px-4 mb-10">
         <div className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-3 font-fredoka animate-bounce-soft">
-            Nuestros Vasos Bailarines 💃🕺
+            Nuestros Vasos Bailarines <FaMusic className="inline-block text-2xl" />
           </h2>
           <p className="text-text-light text-lg">
             ¡Mira cómo bailan mientras se deslizan!

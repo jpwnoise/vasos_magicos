@@ -79,6 +79,7 @@ export const products: Product[] = [
     price: 50,
     category: 'vasos-heroes',
     icon: 'Shield',
+    image:'/hero_cup.png',
     colors: ['#dbeafe', '#fef3c7', '#fecaca'],
     minQty: 10,
   },

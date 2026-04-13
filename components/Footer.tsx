@@ -1,5 +1,6 @@
 import { FaWhatsapp, FaInstagram, FaFacebook, FaHeart } from "react-icons/fa";
 import { GiPartyPopper } from "react-icons/gi";
+import { MdAutoAwesome } from "react-icons/md";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -21,7 +22,7 @@ export default function Footer() {
               </h3>
             </div>
             <p className="text-text-light leading-relaxed max-w-md">
-              Creamos vasos personalizados con diseños adorables para hacer de tus fiestas infantiles un momento mágico e inolvidable ✨
+              Creamos vasos personalizados con diseños adorables para hacer de tus fiestas infantiles un momento mágico e inolvidable <MdAutoAwesome className="inline-block text-accent-purple" />
             </p>
             <p className="text-sm text-text-light">
               © {currentYear} Todos los derechos reservados
