@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Nunito, Fredoka } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 import "./globals.css";
 
@@ -63,6 +64,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
+        <Analytics />
       </body>
     </html>
   );
