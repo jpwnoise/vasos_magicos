@@ -79,7 +79,7 @@ export default function Home() {
               <div className="flex justify-center animate-slide-up opacity-0 delay-3">
                 <div className="relative w-full max-w-md animate-float">
                   <Image
-                    src="/hero.png"
+                    src="/hero_2.png"
                     alt="Vasos personalizados coloridos para fiestas infantiles"
                     width={500}
                     height={500}

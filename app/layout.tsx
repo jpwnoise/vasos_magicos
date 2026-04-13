@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito, Fredoka } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
+import { CartProvider } from "@/context/CartContext";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -58,13 +59,15 @@ export default function RootLayout({
       <body
         className={`${nunito.variable} ${fredoka.variable} antialiased`}
       >
-        <Script
-          id="json-ld-store"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        {children}
-        <Analytics />
+        <CartProvider>
+          <Script
+            id="json-ld-store"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+          {children}
+          <Analytics />
+        </CartProvider>
       </body>
     </html>
   );

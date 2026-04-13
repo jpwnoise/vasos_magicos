@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp, FaCartPlus } from "react-icons/fa";
 import { Product } from "@/data/products";
+import { useCart } from "@/context/CartContext";
 
 interface ProductCardProps {
   product: Product;
@@ -132,57 +133,47 @@ function getProductIcon(iconName: string, color: string) {
   }
 }
 
+// Ángulo de inclinación de la "mesa"
+const TABLE_TILT = 24;
+
 export default function ProductCard({ product, index }: ProductCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [transform, setTransform] = useState("perspective(1000px) rotateX(0deg) rotateY(0deg)");
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -8;
-    const rotateY = ((x - centerX) / centerX) * 8;
-
-    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`);
-  };
-
-  const handleMouseLeave = () => {
-    setTransform("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
-    setIsHovered(false);
-  };
-
   const phoneNumber = "523313262108";
   const message = encodeURIComponent(`Hola! Me interesa el producto: ${product.name}`);
-
   const hasImage = !!product.image;
+  const { addToCart } = useCart();
+  const [addedFeedback, setAddedFeedback] = useState(false);
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    setAddedFeedback(true);
+    setTimeout(() => setAddedFeedback(false), 1500);
+  };
 
   return (
     <div
-      ref={cardRef}
-      className="group bg-white rounded-3xl shadow-md animate-slide-up opacity-0"
+      className="group animate-slide-up opacity-0 rounded-3xl"
       style={{
         animationDelay: `${index * 0.1}s`,
-        transform,
-        transition: "transform 0.3s ease, box-shadow 0.3s ease",
-        transformStyle: "preserve-3d",
+        perspective: "1200px",
+        position: "relative",
       }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={handleMouseLeave}
     >
-      {/* Product Image Area */}
-      <div 
-        className="relative h-48 sm:h-56 flex items-center justify-center"
-        style={{ 
-          background: `linear-gradient(135deg, ${product.colors[0]}, ${product.colors[1]})`,
+      {/* "Mesa" inclinada - fondo decorativo */}
+      <div
+        ref={cardRef}
+        className="absolute inset-0 bg-white rounded-3xl shadow-lg border border-gray-400/60"
+        style={{
+          transform: `rotateX(${TABLE_TILT}deg)`,
+          transformOrigin: "center bottom",
+          transition: "transform 0.4s ease, box-shadow 0.4s ease",
         }}
       >
-        {/* Decorative elements */}
-        <div className="absolute inset-0">
+        {/* Decorative elements - en la mesa */}
+        <div className="absolute inset-0 rounded-3xl " style={{
+          background: `linear-gradient(135deg, ${product.colors[0]}, ${product.colors[1]})`,
+          height: "55%",
+        }}>
           <div className="absolute top-2 right-2 animate-sparkle">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="#eab308">
               <path d="M10 0l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z"/>
@@ -193,14 +184,21 @@ export default function ProductCard({ product, index }: ProductCardProps) {
               <path d="M10 0l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z"/>
             </svg>
           </div>
-        </div>
 
-        {/* Product Icon or Image with 3D pop-out */}
-        <div 
-          className="relative z-10 transition-transform duration-300"
+          {/* Badge */}
+          <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-accent-purple shadow-sm">
+            Mín. {product.minQty} piezas
+          </div>
+        </div>
+      </div>
+
+      {/* Contenido "parado" - sin rotación */}
+      <div className="relative z-10">
+        {/* Imagen */}
+        <div
+          className="relative h-48 sm:h-56 flex items-center justify-center"
           style={{
-            transform: isHovered ? "translateZ(60px) scale(1.1)" : "translateZ(30px)",
-            transition: "transform 0.3s ease",
+            animation: "productFloat 3s ease-in-out infinite",
           }}
         >
           {hasImage ? (
@@ -209,67 +207,69 @@ export default function ProductCard({ product, index }: ProductCardProps) {
               alt={product.name}
               width={200}
               height={200}
-              className="w-40 h-40 sm:w-48 sm:h-48 object-contain drop-shadow-2xl -translate-y-10  scale-165"
+              className="w-40 h-40 sm:w-48 sm:h-48 object-contain"
               style={{
                 filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.2))",
               }}
             />
           ) : (
-            <div style={{ transform: isHovered ? "translateZ(40px)" : "translateZ(0)" }}>
-              {getProductIcon(product.icon, product.colors[2] ? "#ffffff" : product.colors[0])}
-            </div>
+            getProductIcon(product.icon, product.colors[2] ? "#ffffff" : product.colors[0])
           )}
         </div>
 
-        {/* Badge */}
-        <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-accent-purple shadow-sm">
-          Mín. {product.minQty} piezas
-        </div>
-      </div>
+        {/* Product Info */}
+        <div
+          className="p-5 my-8 space-y-5 border border-gray-400/40 bg-white shadow-xl rounded-2xl mx-auto max-w-[85%] -translate-y-5"
+          style={{
+            background: `linear-gradient(135deg, white, ${product.colors[1]})`,
+            transformStyle: "preserve-3d",
+            transform: "translateY(-20px) perspective(800px) rotateY(-6deg)",
+          }}
+        >
+          <h3 className="text-xl font-bold text-text-dark font-fredoka">
+            {product.name}
+          </h3>
 
-      {/* Product Info */}
-      <div className="p-5 space-y-3">
-        <h3 className="text-xl font-bold text-text-dark font-fredoka">
-          {product.name}
-        </h3>
-        
-        <p className="text-sm text-text-light leading-relaxed">
-          {product.description}
-        </p>
+          <p className="text-sm text-text-light leading-relaxed">
+            {product.description}
+          </p>
 
-        {/* Color Options */}
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold text-text-light">Colores:</span>
-          <div className="flex gap-1.5">
-            {product.colors.map((color, i) => (
-              <div
-                key={i}
-                className="w-5 h-5 rounded-full border-2 border-white shadow-sm"
-                style={{ backgroundColor: color }}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Price and Order Button */}
-        <div className="flex items-center justify-between pt-3 border-t border-pastel-purple/30">
-          <div>
-            <span className="text-xs text-text-light">Desde</span>
-            <p className="text-2xl font-bold gradient-text font-fredoka">
-              ${product.price} <span className="text-sm text-text-light font-normal">c/u</span>
-            </p>
+          {/* Color Options */}
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-semibold text-text-light">Colores:</span>
+            <div className="flex gap-1.5">
+              {product.colors.map((color, i) => (
+                <div
+                  key={i}
+                  className="w-5 h-5 rounded-full border-2 border-white shadow-sm"
+                  style={{ backgroundColor: color }}
+                />
+              ))}
+            </div>
           </div>
 
-          <a
-            href={`https://wa.me/${phoneNumber}?text=${message}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-gradient-to-r from-accent-green to-emerald-500 text-white px-4 py-2.5 rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 font-bold text-sm"
-            aria-label={`Ordenar ${product.name} por WhatsApp`}
-          >
-            <FaWhatsapp className="text-lg" />
-            Ordenar
-          </a>
+          {/* Price and Add to Cart Button */}
+          <div className="flex items-center justify-between pt-3 border-t border-pastel-purple/30">
+            <div>
+              <span className="text-xs text-text-light">Desde</span>
+              <p className="text-2xl font-bold gradient-text font-fredoka">
+                ${product.price} <span className="text-sm text-text-light font-normal">c/u</span>
+              </p>
+            </div>
+
+            <button
+              onClick={handleAddToCart}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-full font-bold text-sm transition-all duration-300 hover:shadow-lg hover:scale-105 ${
+                addedFeedback
+                  ? "bg-accent-green text-white"
+                  : "bg-gradient-to-r from-accent-purple to-accent-pink text-white"
+              }`}
+              aria-label="Agregar al carrito"
+            >
+              <FaCartPlus className="text-lg" />
+              {addedFeedback ? "¡Agregado!" : "Agregar"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
