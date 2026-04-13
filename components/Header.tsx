@@ -14,19 +14,19 @@ export default function Header() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-40 glass shadow-sm">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4">
           <div className="flex items-center justify-between h-16 md:h-20">
 
             {/* Logo */}
-            <a href="#" className="flex items-center gap-2 group">
-              <span className="text-3xl animate-bounce-soft">
+            <a href="#" className="flex items-center gap-1.5 sm:gap-2 group min-w-0">
+              <span className="text-2xl sm:text-3xl flex-shrink-0 animate-bounce-soft">
                 <GiPartyPopper />
               </span>
-              <div>
-                <h1 className="text-xl md:text-2xl font-bold gradient-text font-['var(--font-fredoka)]">
+              <div className="min-w-0">
+                <h1 className="text-base sm:text-xl md:text-2xl font-bold gradient-text truncate">
                   Vasos Mágicos
                 </h1>
-                <p className="text-xs text-text-light hidden sm:block">
+                <p className="text-xs text-text-light hidden md:block">
                   Diseños personalizados para niños <MdAutoAwesome className="inline-block" />
                 </p>
               </div>
@@ -68,11 +68,11 @@ export default function Header() {
             </nav>
 
             {/* Mobile Buttons */}
-            <div className="md:hidden flex items-center gap-2">
+            <div className="md:hidden flex items-center gap-1 flex-shrink-0">
               {/* Cart Button Mobile */}
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-3 text-accent-purple hover:text-accent-pink transition-colors"
+                className="relative p-2.5 text-accent-purple hover:text-accent-pink transition-colors flex-shrink-0"
                 aria-label="Abrir carrito de compras"
               >
                 <FaShoppingCart className="text-xl" />
@@ -86,7 +86,7 @@ export default function Header() {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-accent-purple hover:text-accent-pink transition-colors p-2"
+                className="text-accent-purple hover:text-accent-pink transition-colors p-2.5 flex-shrink-0"
                 aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
                 aria-expanded={isMenuOpen}
               >
