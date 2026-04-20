@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { FaStar, FaHeart, FaCrown, FaMoon, FaSeedling, FaTrophy, FaPalette } from "react-icons/fa";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { GiPartyPopper } from "react-icons/gi";
 import { MdAutoAwesome } from "react-icons/md";
 import Header from "@/components/Header";
@@ -25,24 +26,26 @@ export default function Home() {
   return (
     <>
       <Header />
-      
+
       <main className="pt-20 md:pt-24">
         {/* Hero Section */}
-        <section className="bg-pastel-gradient py-16 md:py-24 mb-12 relative overflow-hidden">
+        <section className="bg-pastel-gradient py-16 md:py-24 mb-12 relative overflow-hidden"
+          style={{ minHeight: "calc(100vh - 5rem)" }} // si tu navbar mide 4rem (h-16)
+        >
           {/* Decorative elements */}
           <div className="absolute top-10 left-10 animate-float">
             <svg width="60" height="60" viewBox="0 0 20 20" fill="#ec4899" opacity="0.3">
-              <path d="M10 0l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z"/>
+              <path d="M10 0l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z" />
             </svg>
           </div>
           <div className="absolute bottom-10 right-10 animate-float" style={{ animationDelay: "1s" }}>
             <svg width="50" height="50" viewBox="0 0 20 20" fill="#8b5cf6" opacity="0.3">
-              <path d="M10 0l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z"/>
+              <path d="M10 0l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z" />
             </svg>
           </div>
           <div className="absolute top-1/2 left-1/4 animate-sparkle">
             <svg width="40" height="40" viewBox="0 0 20 20" fill="#f97316" opacity="0.4">
-              <circle cx="10" cy="10" r="10"/>
+              <circle cx="10" cy="10" r="10" />
             </svg>
           </div>
 
@@ -90,6 +93,21 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          {/** elemento animado que dice Mira nuestro catalago */}
+
+
+          <div className="flex justify-center animate-slide-up opacity-0 delay-3">
+            <div className="relative w-full max-w-md animate-float">
+              <div className="text-4xl w-full flex flex-col items-center mt-40 gradient-text">
+                <div className="animate-slide-up opacity-0 delay-4">
+                  <p className="gradient-text p-2">Catálogo</p>
+                  <div className="flex flex-col items-center">< MdOutlineKeyboardArrowDown size={64} /></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </section>
 
         {/* Products Section */}

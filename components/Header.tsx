@@ -5,6 +5,7 @@ import { FaBars, FaTimes, FaWhatsapp, FaShoppingCart } from "react-icons/fa";
 import { GiPartyPopper } from "react-icons/gi";
 import { MdAutoAwesome } from "react-icons/md";
 import { useCart } from "@/context/CartContext";
+import {motion} from 'framer-motion'
 import Cart from "@/components/Cart";
 
 export default function Header() {
@@ -13,7 +14,12 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 glass shadow-sm">
+<motion.header
+  initial={{ y: -50, opacity: 0 }}
+  animate={{ y: 0, opacity: 1 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  className="fixed top-0 left-0 right-0 z-40 glass shadow-sm"
+>
         <div className="max-w-7xl mx-auto px-3 sm:px-4">
           <div className="flex items-center justify-between h-16 md:h-20">
 
@@ -137,7 +143,7 @@ export default function Header() {
             </nav>
           )}
         </div>
-      </header>
+      </motion.header>
 
       {/* Cart Component */}
       <Cart />
